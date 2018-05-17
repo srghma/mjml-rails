@@ -1,0 +1,15 @@
+<mjml>
+  <mj-body>
+    <mj-container>
+      <mj-section>
+        <mj-column>
+          <mj-text>Hello from partial_with_block.mjml outside block</mj-text>
+
+          <%= render partial: 'partial_with_block_wrapper', :formats => [:html] do %>
+            <mj-text>Hello from partial_with_block.mjml inside block</mj-text>
+          <% end %>
+        </mj-column>
+      </mj-section>
+    </mj-container>
+  </mj-body>
+</mjml>

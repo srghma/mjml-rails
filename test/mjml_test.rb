@@ -37,6 +37,10 @@ class Notifier < ActionMailer::Base
       format.html  { render 'contact' }
     end
   end
+
+  def partial_with_block
+    mail(to: 'foo@bar.com', from: 'john.doe@example.com', &:html)
+  end
 end
 
 # class TestRenderer < ActionView::PartialRenderer
@@ -81,6 +85,15 @@ class MjmlTest < ActiveSupport::TestCase
     email = Notifier.no_partial(:mjml)
     assert_equal 'text/html', email.mime_type
     assert_match(/Hello World/, email.body.encoded.strip)
+    assert_no_match(/mj-text/, email.body.encoded.strip)
+  end
+
+  test 'partial_with_block' do
+    email = Notifier.partial_with_block
+    assert_equal 'text/html', email.mime_type
+    assert_match(/Hello from partial_with_block.mjml outside block/, email.body.encoded.strip)
+    assert_match(/Hello from partial_with_block_wrapper.mjml/, email.body.encoded.strip)
+    assert_match(/Hello from partial_with_block.mjml inside block/, email.body.encoded.strip)
     assert_no_match(/mj-text/, email.body.encoded.strip)
   end
 
