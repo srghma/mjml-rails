@@ -1,1 +1,1 @@
-require "mjml"
+require 'mjml'

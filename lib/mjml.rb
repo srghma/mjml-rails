@@ -1,20 +1,20 @@
-require "action_view"
-require "action_view/template"
-require "mjml/mjmltemplate"
-require "mjml/railtie"
-require "rubygems"
+require 'action_view'
+require 'action_view/template'
+require 'mjml/mjmltemplate'
+require 'mjml/railtie'
+require 'rubygems'
 
 module Mjml
   mattr_accessor :template_language, :raise_render_exception, :mjml_binary_version_supported, :mjml_binary_error_string
 
   @@template_language = :erb
   @@raise_render_exception = false
-  @@mjml_binary_version_supported = "4.0."
+  @@mjml_binary_version_supported = '4.0.'
   @@mjml_binary_error_string = "Couldn't find the MJML #{Mjml.mjml_binary_version_supported} binary.. have you run $ npm install mjml?"
 
   def self.check_version(bin)
     IO.popen("#{bin} --version") { |io| io.read.include?("mjml-core: #{Mjml.mjml_binary_version_supported}") }
-  rescue
+  rescue StandardError
     false
   end
 

@@ -1,38 +1,38 @@
-require "test_helper"
+require 'test_helper'
 
 class Notifier < ActionMailer::Base
-  self.view_paths = File.expand_path("../views", __FILE__)
+  self.view_paths = File.expand_path('views', __dir__)
 
   layout false
 
   def contact(recipient, format_type)
     @recipient = recipient
-    mail(:to => @recipient, :from => "john.doe@example.com") do |format|
+    mail(to: @recipient, from: 'john.doe@example.com') do |format|
       format.send(format_type)
     end
   end
 
   def link(format_type)
-    mail(:to => 'foo@bar.com', :from => "john.doe@example.com") do |format|
+    mail(to: 'foo@bar.com', from: 'john.doe@example.com') do |format|
       format.send(format_type)
     end
   end
 
   def user(format_type)
-    mail(:to => 'foo@bar.com', :from => "john.doe@example.com") do |format|
+    mail(to: 'foo@bar.com', from: 'john.doe@example.com') do |format|
       format.send(format_type)
     end
   end
 
   def no_partial(format_type)
-    mail(:to => 'foo@bar.com', :from => "john.doe@example.com") do |format|
+    mail(to: 'foo@bar.com', from: 'john.doe@example.com') do |format|
       format.send(format_type)
     end
   end
 
   def multiple_format_contact(recipient)
     @recipient = recipient
-    mail(:to => @recipient, :from => "john.doe@example.com", :template => "contact") do |format|
+    mail(to: @recipient, from: 'john.doe@example.com', template: 'contact') do |format|
       format.text  { render 'contact' }
       format.html  { render 'contact' }
     end
@@ -52,7 +52,6 @@ end
 # end
 
 class MjmlTest < ActiveSupport::TestCase
-
   setup do
     @original_renderer = Mjml.renderer
     @original_processing_options = Mjml.processing_options
@@ -63,9 +62,9 @@ class MjmlTest < ActiveSupport::TestCase
     Mjml.processing_options = @original_processing_options
   end
 
-  test "html should be sent as html" do
-    email = Notifier.contact("you@example.com", :mjml)
-    assert_equal "text/html", email.mime_type
+  test 'html should be sent as html' do
+    email = Notifier.contact('you@example.com', :mjml)
+    assert_equal 'text/html', email.mime_type
     assert_no_match(/<mj-body>/, email.body.encoded.strip)
     assert_match(/<body/, email.body.encoded.strip)
     assert_match('<p>Hello from <a href="http://www.sighmon.com">sighmon.com</a></p>', email.body.encoded.strip)
@@ -73,14 +72,14 @@ class MjmlTest < ActiveSupport::TestCase
 
   test 'with partial' do
     email = Notifier.user(:mjml)
-    assert_equal "text/html", email.mime_type
+    assert_equal 'text/html', email.mime_type
     assert_match(/Hello Partial/, email.body.encoded.strip)
     assert_no_match(/mj-text/, email.body.encoded.strip)
   end
 
   test 'without a partial' do
     email = Notifier.no_partial(:mjml)
-    assert_equal "text/html", email.mime_type
+    assert_equal 'text/html', email.mime_type
     assert_match(/Hello World/, email.body.encoded.strip)
     assert_no_match(/mj-text/, email.body.encoded.strip)
   end
@@ -123,5 +122,4 @@ class MjmlTest < ActiveSupport::TestCase
   #   assert_equal "text/html", email.mime_type
   #   assert_equal '<p>Hello from <a href="http://www.sighmon.com">http://www.sighmon.com</a></p>', email.body.encoded.strip
   # end
-
 end

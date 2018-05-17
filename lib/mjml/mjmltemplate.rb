@@ -1,4 +1,4 @@
-require "mjml/parser"
+require 'mjml/parser'
 
 module Mjml
   mattr_accessor :processing_options, :renderer
