@@ -7,6 +7,7 @@ module Mjml
     def initialize input
       raise Mjml.mjml_binary_error_string unless mjml_bin
       file = File.open(in_tmp_file, 'w')
+      require 'pry'; ::Kernel.binding.pry;
       file.write(input)
       file.close
     end
@@ -16,6 +17,7 @@ module Mjml
     # @return [String]
     def render
       result = run
+      require 'pry'; ::Kernel.binding.pry;
       remove_tmp_files
       result
     rescue
