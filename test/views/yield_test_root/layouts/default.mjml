@@ -1,0 +1,9 @@
+<mjml>
+  <mj-body>
+    <mj-container>
+      <mj-text>text in layout</mj-text>
+      <%= yield %>
+    </mj-container>
+  </mj-body>
+</mjml>
+

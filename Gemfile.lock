@@ -43,6 +43,7 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.4)
     builder (3.2.3)
+    coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     erubis (2.7.0)
@@ -57,6 +58,7 @@ GEM
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     metaclass (0.0.4)
+    method_source (0.9.0)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -64,6 +66,9 @@ GEM
       metaclass (~> 0.0.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     rack (1.6.10)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -110,6 +115,7 @@ PLATFORMS
 DEPENDENCIES
   mjml-rails!
   mocha (= 1.4.0)
+  pry
   rails (= 4.2.6)
 
 BUNDLED WITH
