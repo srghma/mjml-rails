@@ -40,7 +40,12 @@ module Mjml
     end
 
     def call(template)
+      puts "\ntemplate"
+      puts template.inspect
       compiled_source = template_handler.call(template)
+      puts "\ncompiled_source"
+      puts compiled_source.inspect
+
       if template.formats.include?(:mjml)
         "Mjml::Mjmltemplate.to_html(begin;#{compiled_source};end).html_safe"
       else

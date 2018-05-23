@@ -6,6 +6,8 @@ module Mjml
     def initialize(input)
       raise Mjml.mjml_binary_error_string unless mjml_bin
       file = File.open(in_tmp_file, 'w')
+      puts "\ninput"
+      puts input.inspect
       file.write(input)
       file.close
     end
@@ -15,6 +17,10 @@ module Mjml
     # @return [String]
     def render
       result = run
+
+      puts "\nresult"
+      puts result.inspect
+
       remove_tmp_files
       result
     rescue StandardError

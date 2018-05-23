@@ -39,7 +39,7 @@ class Notifier < ActionMailer::Base
   end
 
   def partial_with_block
-    mail(to: 'foo@bar.com', from: 'john.doe@example.com', &:html)
+    mail(to: 'foo@bar.com', from: 'john.doe@example.com', &:mjml)
   end
 end
 
@@ -66,31 +66,34 @@ class MjmlTest < ActiveSupport::TestCase
     Mjml.processing_options = @original_processing_options
   end
 
-  test 'html should be sent as html' do
-    email = Notifier.contact('you@example.com', :mjml)
-    assert_equal 'text/html', email.mime_type
-    assert_no_match(/<mj-body>/, email.body.encoded.strip)
-    assert_match(/<body/, email.body.encoded.strip)
-    assert_match('<p>Hello from <a href="http://www.sighmon.com">sighmon.com</a></p>', email.body.encoded.strip)
-  end
+  # test 'html should be sent as html' do
+  #   email = Notifier.contact('you@example.com', :mjml)
+  #   assert_equal 'text/html', email.mime_type
+  #   assert_no_match(/<mj-body>/, email.body.encoded.strip)
+  #   assert_match(/<body/, email.body.encoded.strip)
+  #   assert_match('<p>Hello from <a href="http://www.sighmon.com">sighmon.com</a></p>', email.body.encoded.strip)
+  # end
 
-  test 'with partial' do
-    email = Notifier.user(:mjml)
-    assert_equal 'text/html', email.mime_type
-    assert_match(/Hello Partial/, email.body.encoded.strip)
-    assert_no_match(/mj-text/, email.body.encoded.strip)
-  end
+  # test 'with partial' do
+  #   email = Notifier.user(:mjml)
+  #   assert_equal 'text/html', email.mime_type
+  #   assert_match(/Hello Partial/, email.body.encoded.strip)
+  #   assert_no_match(/mj-text/, email.body.encoded.strip)
+  # end
 
-  test 'without a partial' do
-    email = Notifier.no_partial(:mjml)
-    assert_equal 'text/html', email.mime_type
-    assert_match(/Hello World/, email.body.encoded.strip)
-    assert_no_match(/mj-text/, email.body.encoded.strip)
-  end
+  # test 'without a partial' do
+  #   email = Notifier.no_partial(:mjml)
+  #   assert_equal 'text/html', email.mime_type
+  #   assert_match(/Hello World/, email.body.encoded.strip)
+  #   assert_no_match(/mj-text/, email.body.encoded.strip)
+  # end
 
   test 'partial_with_block' do
     email = Notifier.partial_with_block
     assert_equal 'text/html', email.mime_type
+
+    puts email.body.encoded.strip
+
     assert_match(/Hello from partial_with_block.mjml outside block/, email.body.encoded.strip)
     assert_match(/Hello from partial_with_block_wrapper.mjml/, email.body.encoded.strip)
     assert_match(/Hello from partial_with_block.mjml inside block/, email.body.encoded.strip)
